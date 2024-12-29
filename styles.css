@@ -54,6 +54,13 @@ li img {
     font-weight: bold;
 }
 
+.availability-warning {
+    text-align: center;
+    margin: 20px 0;
+    color: #c00;
+    font-weight: bold;
+}
+
 button {
     display: block;
     width: 100%;
@@ -101,3 +108,4 @@ button:hover {
     visibility: visible;
     opacity: 1;
 }
+
