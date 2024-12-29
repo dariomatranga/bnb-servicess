@@ -33,6 +33,17 @@
             height: auto;
             margin-right: 20px;
         }
+        .quantity {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+        .quantity button {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            font-size: 16px;
+        }
         .total {
             font-size: 1.5em;
             margin-top: 20px;
@@ -54,22 +65,38 @@
             <li>
                 <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/images/champagne.jpg" alt="Champagne">
                 <span>Champagne (€90)</span>
-                <input type="checkbox" onchange="toggleService(90)">
+                <div class="quantity">
+                    <button onclick="updateQuantity('champagne', -1)">-</button>
+                    <span id="champagne-quantity">0</span>
+                    <button onclick="updateQuantity('champagne', 1)">+</button>
+                </div>
             </li>
             <li>
                 <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/images/prosecco.jpg" alt="Prosecco">
                 <span>Prosecco (€30)</span>
-                <input type="checkbox" onchange="toggleService(30)">
+                <div class="quantity">
+                    <button onclick="updateQuantity('prosecco', -1)">-</button>
+                    <span id="prosecco-quantity">0</span>
+                    <button onclick="updateQuantity('prosecco', 1)">+</button>
+                </div>
             </li>
             <li>
                 <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/images/flowers.jpg" alt="Mazzo di Fiori">
                 <span>Mazzo di Fiori (€50)</span>
-                <input type="checkbox" onchange="toggleService(50)">
+                <div class="quantity">
+                    <button onclick="updateQuantity('flowers', -1)">-</button>
+                    <span id="flowers-quantity">0</span>
+                    <button onclick="updateQuantity('flowers', 1)">+</button>
+                </div>
             </li>
             <li>
                 <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/images/boat.jpg" alt="Giro in Barca">
                 <span>Giro in Barca per 2 persone (€300)</span>
-                <input type="checkbox" onchange="toggleService(300)">
+                <div class="quantity">
+                    <button onclick="updateQuantity('boat', -1)">-</button>
+                    <span id="boat-quantity">0</span>
+                    <button onclick="updateQuantity('boat', 1)">+</button>
+                </div>
             </li>
         </ul>
 
@@ -85,19 +112,45 @@
     </div>
 
     <script>
-        let totalPrice = 0;
+        const prices = {
+            champagne: 90,
+            prosecco: 30,
+            flowers: 50,
+            boat: 300
+        };
 
-        function toggleService(price) {
-            totalPrice += price;
-            document.getElementById("total-price").innerText = `€${totalPrice.toFixed(2)}`;
+        const quantities = {
+            champagne: 0,
+            prosecco: 0,
+            flowers: 0,
+            boat: 0
+        };
+
+        function updateQuantity(service, change) {
+            const maxQuantity = 3;
+            quantities[service] = Math.min(maxQuantity, Math.max(0, quantities[service] + change));
+            document.getElementById(`${service}-quantity`).innerText = quantities[service];
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = 0;
+            for (let service in quantities) {
+                total += quantities[service] * prices[service];
+            }
+            document.getElementById("total-price").innerText = `€${total.toFixed(2)}`;
         }
 
         paypal.Buttons({
             createOrder: function(data, actions) {
+                const total = Object.keys(quantities).reduce((sum, service) => {
+                    return sum + quantities[service] * prices[service];
+                }, 0);
+
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: totalPrice.toFixed(2)
+                            value: total.toFixed(2)
                         }
                     }]
                 });
@@ -105,7 +158,6 @@
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
                     alert('Grazie per la tua richiesta, ' + details.payer.name.given_name + '! Confermeremo entro 24 ore.');
-                    // Puoi anche inviare un'email con il backend qui.
                 });
             },
             onError: function(err) {
