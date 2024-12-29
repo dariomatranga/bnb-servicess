@@ -11,11 +11,15 @@
 <body>
     <div class="container">
         <h1>Benvenuto al tuo BnB!</h1>
+        <img src="main-photo.jpg" alt="BnB principale" class="main-photo">
+
         <p>Scegli i servizi aggiuntivi per il tuo soggiorno:</p>
         <ul id="services-list"></ul>
+
         <div class="total">
             <p>Totale: <span id="total-price">€0.00</span></p>
         </div>
+
         <!-- Pulsante PayPal -->
         <div id="paypal-button-container"></div>
     </div>
@@ -24,7 +28,7 @@
     <div id="modal" class="modal hidden">
         <div class="modal-content">
             <h2>Richiesta inviata!</h2>
-            <p>Ti contatteremo per confermare i dettagli del servizio.</p>
+            <p>Grazie per la tua richiesta. Ti contatteremo entro 24 ore per confermare la disponibilità del servizio.</p>
             <button id="close-modal">Chiudi</button>
         </div>
     </div>
