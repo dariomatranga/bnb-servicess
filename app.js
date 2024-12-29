@@ -1,8 +1,8 @@
 const services = [
-    { name: "Champagne", price: 90, img: "champagne.jpg" },
-    { name: "Prosecco", price: 30, img: "prosecco.jpg" },
-    { name: "Mazzo di fiori", price: 50, img: "flowers.jpg" },
-    { name: "Giro in barca per 2 persone", price: 300, img: "boat.jpg" }
+    { name: "Champagne", price: 90, img: "images/champagne.jpg" },
+    { name: "Prosecco", price: 30, img: "images/prosecco.jpg" },
+    { name: "Mazzo di fiori", price: 50, img: "images/flowers.jpg" },
+    { name: "Giro in barca per 2 persone", price: 300, img: "images/boat.jpg" }
 ];
 
 let selectedServices = new Set();
@@ -45,41 +45,11 @@ paypal.Buttons({
         });
     },
     onApprove: function(data, actions) {
-        return actions.order.capture().then(function(details) {
-            sendEmail(details);
-            showModal();
-        });
+        alert("Grazie per la tua richiesta! Ti contatteremo entro 24 ore per confermare.");
     },
     onError: function(err) {
         alert("Errore durante il pagamento: " + err);
     }
 }).render('#paypal-button-container');
-
-function sendEmail(details) {
-    emailjs.init("public_xxxx");
-
-    emailjs.send("service_xxxx", "template_xxxx", {
-        name: details.payer.name.given_name,
-        email: details.payer.email_address,
-        services: Array.from(selectedServices).map(s => s.name).join(", "),
-        total: Array.from(selectedServices).reduce((sum, service) => sum + service.price, 0).toFixed(2)
-    }).then(() => {
-        console.log("Email inviata!");
-    }).catch(err => {
-        console.error("Errore nell'invio dell'email: ", err);
-    });
-}
-
-function showModal() {
-    document.getElementById("modal").classList.remove("hidden");
-    document.getElementById("modal").classList.add("visible");
-}
-
-function closeModal() {
-    document.getElementById("modal").classList.remove("visible");
-    document.getElementById("modal").classList.add("hidden");
-}
-
-document.getElementById("close-modal").addEventListener("click", closeModal);
 
 renderServices();
