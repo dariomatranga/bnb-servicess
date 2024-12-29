@@ -5,42 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servizi BnB</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://www.paypal.com/sdk/js?client-id=TUO_CLIENT_ID&currency=EUR"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=EUR"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .main-photo {
+            width: 100%;
+            height: auto;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        li img {
+            width: 80px;
+            height: auto;
+            margin-right: 20px;
+        }
+        .total {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+        .availability-warning {
+            margin-top: 20px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Benvenuto in Cavour Suites&Room</h1>
-        <img src="images/main-photo.jpg" alt="Immagine principale del BnB" class="main-photo">
+        <h1>Benvenuto al tuo BnB!</h1>
+        <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/images/main-photo.jpg" alt="Immagine principale del BnB" class="main-photo">
 
         <p>Scegli i servizi aggiuntivi per il tuo soggiorno:</p>
         <ul id="services-list">
             <li>
-                <div>
-                    <img src=https://github.com/dariomatranga/bnb-servicess/blob/main/images/champagne.jpeg
-                    <span>Champagne (€90)</span>
-                </div>
-                <input type="checkbox" onchange="toggleService('Champagne')">
+                <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/images/champagne.jpg" alt="Champagne">
+                <span>Champagne (€90)</span>
+                <input type="checkbox" onchange="toggleService(90)">
             </li>
             <li>
-                <div>
-                    <img src="images/prosecco.jpg" alt="Prosecco">
-                    <span>Prosecco (€30)</span>
-                </div>
-                <input type="checkbox" onchange="toggleService('Prosecco')">
+                <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/images/prosecco.jpg" alt="Prosecco">
+                <span>Prosecco (€30)</span>
+                <input type="checkbox" onchange="toggleService(30)">
             </li>
             <li>
-                <div>
-                    <img src="images/flowers.jpg" alt="Mazzo di Fiori">
-                    <span>Mazzo di Fiori (€50)</span>
-                </div>
-                <input type="checkbox" onchange="toggleService('Mazzo di Fiori')">
+                <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/images/flowers.jpg" alt="Mazzo di Fiori">
+                <span>Mazzo di Fiori (€50)</span>
+                <input type="checkbox" onchange="toggleService(50)">
             </li>
             <li>
-                <div>
-                    <img src="images/boat.jpg" alt="Giro in Barca">
-                    <span>Giro in Barca per 2 persone (€300)</span>
-                </div>
-                <input type="checkbox" onchange="toggleService('Giro in Barca per 2 persone')">
+                <img src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/images/boat.jpg" alt="Giro in Barca">
+                <span>Giro in Barca per 2 persone (€300)</span>
+                <input type="checkbox" onchange="toggleService(300)">
             </li>
         </ul>
 
@@ -55,6 +84,34 @@
         <div id="paypal-button-container"></div>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+        let totalPrice = 0;
+
+        function toggleService(price) {
+            totalPrice += price;
+            document.getElementById("total-price").innerText = `€${totalPrice.toFixed(2)}`;
+        }
+
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: totalPrice.toFixed(2)
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Grazie per la tua richiesta, ' + details.payer.name.given_name + '! Confermeremo entro 24 ore.');
+                    // Puoi anche inviare un'email con il backend qui.
+                });
+            },
+            onError: function(err) {
+                alert('Si è verificato un errore durante il pagamento. Riprova più tardi.');
+            }
+        }).render('#paypal-button-container');
+    </script>
 </body>
 </html>
