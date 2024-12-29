@@ -1,103 +1,42 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servizi BnB</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=TUO_CLIENT_ID&currency=EUR"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Benvenuto al tuo BnB!</h1>
+        <img src="main-photo.jpg" alt="BnB principale" class="main-photo">
 
-.container {
-    width: 90%;
-    max-width: 600px;
-    margin: 20px auto;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-}
+        <p>Scegli i servizi aggiuntivi per il tuo soggiorno:</p>
+        <ul id="services-list"></ul>
 
-h1, p {
-    text-align: center;
-}
+        <div class="total">
+            <p>Totale: <span id="total-price">€0.00</span></p>
+        </div>
 
-.main-photo {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-    border-radius: 10px;
-}
+        <p class="availability-warning">
+            <strong>Nota:</strong> Tutti i servizi sono soggetti a disponibilità. Riceverai conferma entro 24 ore.
+        </p>
 
-ul {
-    list-style: none;
-    padding: 0;
-}
+        <!-- Pulsante PayPal -->
+        <div id="paypal-button-container"></div>
+    </div>
 
-li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
+    <!-- Modale per conferma richiesta -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Richiesta inviata!</h2>
+            <p>Grazie per la tua richiesta. Ti contatteremo entro 24 ore per confermare la disponibilità del servizio.</p>
+            <button id="close-modal">Chiudi</button>
+        </div>
+    </div>
 
-li img {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.total {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.availability-warning {
-    text-align: center;
-    margin: 20px 0;
-    color: #c00;
-    font-weight: bold;
-}
-
-button {
-    display: block;
-    width: 100%;
-    background-color: #0070ba;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #005f99;
-}
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.2s;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.modal.hidden {
-   
+    <script src="app.js"></script>
+</body>
+</html>
