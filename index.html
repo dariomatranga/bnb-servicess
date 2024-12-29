@@ -1,17 +1,16 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servizi BnB</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- PayPal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=TUO_CLIENT_ID&currency=EUR"></script>
 </head>
 <body>
     <div class="container">
         <h1>Benvenuto al tuo BnB!</h1>
-        <img src="main-photo.jpg" alt="BnB principale" class="main-photo">
+        <img src="images/main-photo.jpg" alt="BnB principale" class="main-photo">
 
         <p>Scegli i servizi aggiuntivi per il tuo soggiorno:</p>
         <ul id="services-list"></ul>
@@ -24,15 +23,13 @@
             <strong>Nota:</strong> Tutti i servizi sono soggetti a disponibilità. Riceverai conferma entro 24 ore.
         </p>
 
-        <!-- Pulsante PayPal -->
         <div id="paypal-button-container"></div>
     </div>
 
-    <!-- Modale per conferma richiesta -->
     <div id="modal" class="modal hidden">
         <div class="modal-content">
             <h2>Richiesta inviata!</h2>
-            <p>Grazie per la tua richiesta. Ti contatteremo entro 24 ore per confermare la disponibilità del servizio.</p>
+            <p>Grazie per la tua richiesta. Ti contatteremo entro 24 ore per confermare la disponibilità.</p>
             <button id="close-modal">Chiudi</button>
         </div>
     </div>
