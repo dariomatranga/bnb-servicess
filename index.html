@@ -5,16 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servizi BnB</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- PayPal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=TUO_CLIENT_ID&currency=EUR"></script>
 </head>
 <body>
     <div class="container">
         <h1>Benvenuto al tuo BnB!</h1>
-        <img src="main-photo.jpg" alt="BnB principale" class="main-photo">
+        <img src="images/main-photo.jpg" alt="Immagine principale del BnB" class="main-photo">
 
         <p>Scegli i servizi aggiuntivi per il tuo soggiorno:</p>
-        <ul id="services-list"></ul>
+        <ul id="services-list">
+            <li>
+                <div>
+                    <img src="images/champagne.jpg" alt="Champagne">
+                    <span>Champagne (€90)</span>
+                </div>
+                <input type="checkbox" onchange="toggleService('Champagne')">
+            </li>
+            <li>
+                <div>
+                    <img src="images/prosecco.jpg" alt="Prosecco">
+                    <span>Prosecco (€30)</span>
+                </div>
+                <input type="checkbox" onchange="toggleService('Prosecco')">
+            </li>
+            <li>
+                <div>
+                    <img src="images/flowers.jpg" alt="Mazzo di Fiori">
+                    <span>Mazzo di Fiori (€50)</span>
+                </div>
+                <input type="checkbox" onchange="toggleService('Mazzo di Fiori')">
+            </li>
+            <li>
+                <div>
+                    <img src="images/boat.jpg" alt="Giro in Barca">
+                    <span>Giro in Barca per 2 persone (€300)</span>
+                </div>
+                <input type="checkbox" onchange="toggleService('Giro in Barca per 2 persone')">
+            </li>
+        </ul>
 
         <div class="total">
             <p>Totale: <span id="total-price">€0.00</span></p>
@@ -24,17 +52,7 @@
             <strong>Nota:</strong> Tutti i servizi sono soggetti a disponibilità. Riceverai conferma entro 24 ore.
         </p>
 
-        <!-- Pulsante PayPal -->
         <div id="paypal-button-container"></div>
-    </div>
-
-    <!-- Modale per conferma richiesta -->
-    <div id="modal" class="modal hidden">
-        <div class="modal-content">
-            <h2>Richiesta inviata!</h2>
-            <p>Grazie per la tua richiesta. Ti contatteremo entro 24 ore per confermare la disponibilità del servizio.</p>
-            <button id="close-modal">Chiudi</button>
-        </div>
     </div>
 
     <script src="app.js"></script>
